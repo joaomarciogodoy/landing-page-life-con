@@ -1,0 +1,892 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Life-Con: Identidade | 25 de Julho</title>
+    <meta
+      name="description"
+      content="Conferência Identidade na Igreja Evangélica Restitui, dia 25 de julho, em Vargem Grande do Sul."
+    />
+
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,700;0,14..32,800;0,14..32,900;1,14..32,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              inter: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              orangeLife: '#ff5a1f',
+              orangeDeep: '#d84315',
+              blackLife: '#0b0b0b',
+              graphite: '#141414',
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+      body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+      #page-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+          radial-gradient(circle at 50% 42%, rgba(255,90,31,0.16), transparent 34%),
+          linear-gradient(145deg, #050505 0%, #101010 52%, #050505 100%);
+        transition: opacity 0.45s ease, visibility 0.45s ease;
+      }
+      #page-loader.loaded {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .loader-shell {
+        width: min(92vw, 820px);
+        display: grid;
+        gap: 0;
+        justify-items: center;
+      }
+      .loader-title-wrap {
+        position: relative;
+        width: 100%;
+        min-height: 110px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 14px;
+        border: 1px solid rgba(255,90,31,0.24);
+        background:
+          linear-gradient(90deg, rgba(255,90,31,0.08), rgba(255,255,255,0.04), rgba(255,90,31,0.08)),
+          rgba(0,0,0,0.34);
+        box-shadow: inset 0 0 28px rgba(255,90,31,0.08), 0 0 38px rgba(255,90,31,0.08);
+        padding: 16px 20px;
+      }
+      .loader-title-wrap::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 18px 18px;
+        mask-image: linear-gradient(90deg, transparent, #000 24%, #000 76%, transparent);
+      }
+      .loader-title-wrap::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        transform: translateX(-100%);
+        background: linear-gradient(90deg, transparent, rgba(255,90,31,0.34), transparent);
+        animation: loader-scan 1.15s ease-in-out infinite;
+      }
+      .loader-title {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 6px;
+        width: 100%;
+      }
+      @media (min-width: 640px) {
+        .loader-title {
+          flex-direction: row;
+          gap: 16px;
+        }
+      }
+      .loader-word {
+        font-size: clamp(1.4rem, 6.8vw, 2.3rem);
+        font-weight: 900;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #fff;
+        text-shadow: 0 0 18px rgba(255,90,31,0.56);
+        white-space: nowrap;
+        min-height: 1.2em;
+        display: inline-block;
+      }
+      .loader-word::after {
+        content: '';
+        display: inline-block;
+        width: 2.5px;
+        height: 1em;
+        margin-left: 6px;
+        vertical-align: -0.1em;
+        background: #ff5a1f;
+        box-shadow: 0 0 16px rgba(255,90,31,0.9);
+        opacity: 0;
+        transition: opacity 0.1s;
+      }
+      .loader-word.typing::after {
+        opacity: 1;
+        animation: cursor-blink 0.72s steps(1) infinite;
+      }
+      @keyframes loader-scan {
+        100% { transform: translateX(100%); }
+      }
+      @keyframes cursor-blink {
+        50% { opacity: 0; }
+      }
+
+      .hero-bg {
+        background: #050505;
+      }
+
+      .hero-banner {
+        position: absolute;
+        inset: -10px;
+        background-image: url("./images/banner.png");
+        background-position: center top;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        z-index: 0;
+      }
+
+      @media (max-width: 767px) {
+        .hero-banner {
+          background-image: url("./images/VERTICAL.jpeg");
+          background-position: center top;
+          background-size: cover;
+          opacity: 0.28;
+        }
+      }
+
+      /* ── Grain overlay ── */
+      .grain::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.10;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+        background-size: 200px;
+        z-index: 0;
+      }
+
+      /* ── Glowing card border ── */
+      .glow-card {
+        position: relative;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 1.5rem;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+      .glow-card:hover {
+        border-color: rgba(255,90,31,0.40);
+        box-shadow: 0 0 32px rgba(255,90,31,0.12);
+      }
+
+      /* ── Countdown digits ── */
+      .cd-block {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+      }
+      .cd-num {
+        font-size: clamp(2.4rem, 7vw, 5rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.05em;
+        background: linear-gradient(135deg, #fff 30%, rgba(255,255,255,0.55));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-variant-numeric: tabular-nums;
+      }
+      .cd-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.45);
+      }
+      .cd-sep {
+        font-size: clamp(2rem, 6vw, 4rem);
+        font-weight: 900;
+        line-height: 1;
+        color: rgba(255,90,31,0.70);
+        margin-bottom: 14px;
+        align-self: flex-start;
+        margin-top: 4px;
+      }
+
+      /* ── Pill badge ── */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(255,90,31,0.45);
+        background: rgba(255,90,31,0.10);
+        border-radius: 999px;
+        padding: 6px 16px;
+        font-size: 0.65rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.24em;
+        color: #ff5a1f;
+      }
+      .badge-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: #ff5a1f;
+        animation: pulse-dot 1.8s ease-in-out infinite;
+      }
+      @keyframes pulse-dot {
+        0%,100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.75); }
+      }
+
+      /* ── Buttons ── */
+      .btn-primary {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: 999px;
+        background: #ff5a1f;
+        padding: 14px 32px;
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #fff;
+        box-shadow: 0 12px 40px rgba(255,90,31,0.30);
+        transition: background 0.25s, transform 0.18s, box-shadow 0.25s;
+        white-space: nowrap;
+      }
+      .btn-primary:hover { background: #d84315; transform: translateY(-2px); box-shadow: 0 18px 48px rgba(255,90,31,0.40); }
+      .btn-primary:active { transform: translateY(0); }
+
+      .btn-outline {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        border: 1.5px solid rgba(255,255,255,0.25);
+        padding: 14px 32px;
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: #fff;
+        transition: border-color 0.25s, color 0.25s, transform 0.18s;
+        white-space: nowrap;
+      }
+      .btn-outline:hover { border-color: #ff5a1f; color: #ff5a1f; transform: translateY(-2px); }
+
+      /* ── Navbar link ── */
+      .nav-link {
+        border-radius: 999px;
+        padding: 8px 18px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: rgba(255,255,255,0.65);
+        transition: background 0.2s, color 0.2s;
+      }
+      .nav-link:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+      /* ── Section heading ── */
+      .section-title {
+        font-size: clamp(1.8rem, 5vw, 3.2rem);
+        font-weight: 900;
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+      }
+      .accent-line {
+        height: 3px;
+        width: 44px;
+        border-radius: 999px;
+        background: #ff5a1f;
+        margin-top: 16px;
+      }
+
+      /* ── Event detail rows ── */
+      .detail-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+      }
+      .detail-row:last-child { border-bottom: none; }
+      .detail-icon {
+        width: 36px; height: 36px;
+        border-radius: 10px;
+        background: rgba(255,90,31,0.12);
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+      }
+
+      /* ── Fade-up animation ── */
+      .fade-up {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+      .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ── Mobile menu overlay ── */
+      #mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 40;
+        background: rgba(10,10,10,0.97);
+        backdrop-filter: blur(24px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+      }
+      #mobile-menu.open { display: flex; }
+      .mobile-nav-link {
+        font-size: 1.6rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: rgba(255,255,255,0.75);
+        transition: color 0.2s;
+      }
+      .mobile-nav-link:hover { color: #ff5a1f; }
+
+      /* ── Hamburger ── */
+      .hamburger {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        cursor: pointer;
+        padding: 4px;
+        z-index: 50;
+      }
+      .hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        border-radius: 2px;
+        background: #fff;
+        transition: transform 0.3s, opacity 0.3s;
+        transform-origin: center;
+      }
+      .hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+      .hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+      /* ── "Sobre" light section ── */
+      .sobre-bg {
+        background: #f5f5f5;
+      }
+
+      /* ── Info chip ── */
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border-radius: 1rem;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.08);
+        padding: 14px 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      }
+      .chip-icon {
+        width: 40px; height: 40px;
+        border-radius: 12px;
+        background: #ff5a1f;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+      }
+
+      .church-logo {
+        height: 28px;
+        width: auto;
+        display: block;
+      }
+
+      .whatsapp-float {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 60;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 58px;
+        height: 58px;
+        border-radius: 999px;
+        background: #25d366;
+        color: #fff;
+        box-shadow: 0 16px 42px rgba(37,211,102,0.34);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+      .whatsapp-float:hover {
+        transform: translateY(-3px);
+        background: #1ebe5d;
+        box-shadow: 0 20px 48px rgba(37,211,102,0.46);
+      }
+      .whatsapp-float:active {
+        transform: translateY(0);
+      }
+
+      /* ── Scrollbar ── */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: #0a0a0a; }
+      ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    </style>
+  </head>
+
+  <body class="bg-blackLife text-white antialiased">
+    <div id="page-loader" aria-label="Carregando página" role="status">
+      <div class="loader-shell">
+        <div class="loader-title-wrap">
+          <div class="loader-title">
+            <span id="loader-word1" class="loader-word"></span>
+            <span id="loader-word2" class="loader-word"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════ NAVBAR ══════════════════════ -->
+    <header id="navbar" class="fixed left-0 right-0 top-0 z-50 border-b border-white/[0.07] bg-blackLife/80 backdrop-blur-2xl transition-all duration-300">
+      <nav class="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 md:px-10">
+
+        <!-- Logo -->
+        <a href="#inicio" class="group flex items-center gap-2.5">
+          <img src="./images/logo-igreja.png" alt="Igreja Evangélica Restitui" class="church-logo" />
+          <span class="hidden h-5 w-px bg-white/20 sm:block"></span>
+          <span class="text-sm font-black uppercase tracking-[0.22em] text-white transition-colors group-hover:text-orangeLife">Life-Con</span>
+          <span class="hidden h-3.5 w-px bg-white/20 sm:block"></span>
+          <span class="hidden text-[0.65rem] font-bold uppercase tracking-[0.22em] text-white/45 sm:block">Identidade</span>
+        </a>
+
+        <!-- Desktop nav -->
+        <div class="hidden items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.03] px-1.5 py-1.5 md:flex">
+          <a href="#sobre" class="nav-link">Sobre</a>
+          <a href="#local" class="nav-link">Local</a>
+          <a href="https://eventos.igrejarestitui.com.br/" target="_blank" rel="noopener noreferrer" class="nav-link">Inscrições</a>
+        </div>
+
+        <!-- CTA + hamburger -->
+        <div class="flex items-center gap-3">
+          <a
+            href="https://eventos.igrejarestitui.com.br/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hidden rounded-full bg-white px-5 py-2 text-[0.68rem] font-black uppercase tracking-wider text-black transition hover:bg-orangeLife hover:text-white sm:inline-flex"
+          >
+            Inscrições
+          </a>
+          <!-- Hamburger (mobile only) -->
+          <button id="hamburger-btn" class="hamburger md:hidden" aria-label="Abrir menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- ══════════════════════ MOBILE MENU ══════════════════════ -->
+    <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu de navegação">
+      <button id="menu-close" class="absolute top-5 right-5 text-white/50 hover:text-white transition" aria-label="Fechar menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <a href="#sobre" class="mobile-nav-link" data-menu-link>Sobre</a>
+      <a href="#local" class="mobile-nav-link" data-menu-link>Local</a>
+      <a href="https://eventos.igrejarestitui.com.br/" target="_blank" rel="noopener noreferrer" class="mobile-nav-link" data-menu-link>Inscrições</a>
+      <a href="https://eventos.igrejarestitui.com.br/" target="_blank" rel="noopener noreferrer" class="btn-primary mt-4" data-menu-link>Adquira sua inscrição</a>
+    </div>
+
+    <!-- ══════════════════════ HERO ══════════════════════ -->
+    <main id="inicio">
+      <section class="hero-bg grain relative flex min-h-screen items-end overflow-hidden px-5 pb-12 pt-28 md:px-10 md:pb-16 md:pt-32">
+        <div class="hero-banner" aria-hidden="true"></div>
+        <div class="absolute inset-0 z-0 bg-gradient-to-b from-black/35 via-black/30 to-black/90"></div>
+        <div class="absolute inset-x-0 bottom-0 z-0 h-1/2 bg-gradient-to-t from-black via-black/80 to-transparent"></div>
+
+        <div class="relative z-10 mx-auto w-full max-w-7xl">
+          <div class="fade-up max-w-3xl">
+            <div class="badge mb-6">
+              <span class="badge-dot"></span>
+              Conferência de Jovens
+            </div>
+
+            <h1 class="sr-only">Life-Con Identidade</h1>
+
+            <!-- Date + Local chips -->
+            <div class="flex flex-wrap gap-3">
+              <div class="chip">
+                <div class="chip-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div>
+                  <p class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-black/45">Data</p>
+                  <p class="text-lg font-black uppercase tracking-tight text-black leading-none mt-0.5">25 JUL</p>
+                </div>
+              </div>
+
+              <div class="chip">
+                <div class="chip-icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                </div>
+                <div>
+                  <p class="text-[0.6rem] font-bold uppercase tracking-[0.2em] text-black/45">Local</p>
+                  <p class="text-sm font-extrabold text-black leading-tight mt-0.5">Igreja Ev. Restitui</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTAs -->
+            <div class="mt-9 flex flex-col gap-3 sm:flex-row">
+              <a href="https://eventos.igrejarestitui.com.br/" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Adquira sua inscrição
+              </a>
+              <a href="#local" class="btn-outline">Ver localização</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ CTA STRIP ══════════════════════ -->
+      <section class="bg-orangeLife px-5 py-5 text-center">
+        <a
+          href="https://eventos.igrejarestitui.com.br/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-full bg-black/20 px-8 py-3 text-xs font-black uppercase tracking-wider text-white transition hover:bg-black/35"
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Adquira sua inscrição!
+        </a>
+      </section>
+
+      <!-- ══════════════════════ COUNTDOWN ══════════════════════ -->
+      <section class="relative overflow-hidden border-y border-white/[0.07] bg-[#0d0d0d] px-5 py-10 md:py-14">
+        <!-- Background glow -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div class="h-48 w-[600px] rounded-full bg-orangeLife/[0.05] blur-3xl"></div>
+        </div>
+
+        <p class="relative z-10 mb-8 text-center text-[0.62rem] font-bold uppercase tracking-[0.30em] text-white/35">
+          Contagem regressiva
+        </p>
+
+        <div id="countdown" class="relative z-10 mx-auto flex max-w-lg items-end justify-center gap-2 sm:gap-4">
+          <div class="cd-block">
+            <strong id="days" class="cd-num">00</strong>
+            <span class="cd-label">Dias</span>
+          </div>
+          <span class="cd-sep">:</span>
+          <div class="cd-block">
+            <strong id="hours" class="cd-num">00</strong>
+            <span class="cd-label">Horas</span>
+          </div>
+          <span class="cd-sep">:</span>
+          <div class="cd-block">
+            <strong id="minutes" class="cd-num">00</strong>
+            <span class="cd-label">Min</span>
+          </div>
+          <span class="cd-sep">:</span>
+          <div class="cd-block">
+            <strong id="seconds" class="cd-num">00</strong>
+            <span class="cd-label">Seg</span>
+          </div>
+        </div>
+
+        <p class="relative z-10 mt-8 text-center text-xs text-white/30">25 de Julho · Igreja Evangélica Restitui · Vargem Grande do Sul</p>
+      </section>
+
+      <!-- ══════════════════════ SOBRE ══════════════════════ -->
+      <section id="sobre" class="sobre-bg px-5 py-20 text-black md:px-10 md:py-28">
+        <div class="mx-auto max-w-4xl">
+          <div class="fade-up text-center">
+            <p class="mb-3 text-[0.65rem] font-bold uppercase tracking-[0.28em] text-orangeLife">Sobre o evento</p>
+            <h2 class="section-title">Sobre</h2>
+            <div class="accent-line mx-auto"></div>
+          </div>
+
+          <div class="fade-up mt-10 space-y-5 text-base leading-8 text-black/65 md:text-lg md:leading-9" style="transition-delay:0.1s">
+            <p>
+              A conferência <strong class="text-black font-extrabold">Identidade</strong> foi criada para jovens que desejam viver um encontro profundo com Deus, entendendo quem são, para que foram chamados e qual propósito carregam.
+            </p>
+            <p>
+              Será um dia marcado por adoração, palavra, comunhão e direção. Mais do que um evento, será um tempo para despertar convicção, fé e posicionamento espiritual.
+            </p>
+            <p>
+              Prepare-se para uma experiência intensa, moderna e impactante, com uma mensagem central: <strong class="text-black font-extrabold">sua identidade não é definida pelo mundo, mas por Deus.</strong>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ INSCRIÇÕES ══════════════════════ -->
+      <section id="inscricoes" class="bg-graphite px-5 py-20 md:px-10 md:py-28">
+        <div class="mx-auto grid max-w-6xl items-start gap-12 md:grid-cols-2 md:items-center">
+
+          <!-- Left -->
+          <div class="fade-up">
+            <p class="mb-3 text-[0.65rem] font-bold uppercase tracking-[0.28em] text-orangeLife">Garanta sua vaga</p>
+            <h2 class="section-title">Inscrições</h2>
+            <div class="accent-line"></div>
+            <p class="mt-8 text-base leading-8 text-white/65 md:text-lg">
+              Garanta sua participação na conferência <strong class="text-white font-extrabold">Life-Con: Identidade</strong>, dia <strong class="text-white">25 de julho</strong>, na Igreja Evangélica Restitui.
+            </p>
+
+          </div>
+
+          <!-- Right – Card -->
+          <div class="fade-up glow-card p-7 md:p-9" style="transition-delay:0.12s">
+            <p class="text-[0.62rem] font-bold uppercase tracking-[0.26em] text-orangeLife">Evento</p>
+            <h3 class="mt-3 text-2xl font-black leading-tight md:text-3xl">Conferência<br>Identidade</h3>
+
+            <div class="mt-7 space-y-0.5">
+              <div class="detail-row">
+                <div class="detail-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5a1f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                </div>
+                <div>
+                  <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-white/35">Data</p>
+                  <p class="mt-0.5 font-bold text-white">25 de julho</p>
+                </div>
+              </div>
+              <div class="detail-row">
+                <div class="detail-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5a1f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                </div>
+                <div>
+                  <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-white/35">Local</p>
+                  <p class="mt-0.5 font-bold text-white">Igreja Evangélica Restitui</p>
+                </div>
+              </div>
+              <div class="detail-row">
+                <div class="detail-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5a1f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div>
+                  <p class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-white/35">Cidade</p>
+                  <p class="mt-0.5 font-bold text-white">Vargem Grande do Sul</p>
+                </div>
+              </div>
+            </div>
+
+            <a
+              href="https://eventos.igrejarestitui.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary mt-8 w-full"
+            >
+              Adquira sua inscrição!
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════ LOCAL ══════════════════════ -->
+      <section id="local" class="sobre-bg text-black">
+        <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 md:px-10 md:py-20 lg:grid-cols-[0.92fr_1.08fr]">
+          <div class="fade-up">
+            <p class="mb-3 text-[0.65rem] font-bold uppercase tracking-[0.28em] text-orangeLife">Como chegar</p>
+            <h2 class="section-title">Local</h2>
+            <div class="accent-line"></div>
+            <p class="mt-7 max-w-md text-base leading-7 text-black/60 md:text-lg">
+              Igreja Evangélica Restitui<br />
+              <span class="text-sm text-black/45">Avenida Vereador José Aleixo, 852 — Jardim São José<br />Vargem Grande do Sul</span>
+            </p>
+            <a
+              href="https://www.google.com/maps?q=Avenida%20Vereador%20Jos%C3%A9%20Aleixo%2C%20852%20-%20Jardim%20S%C3%A3o%20Jos%C3%A9%2C%20Vargem%20Grande%20do%20Sul"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary mt-8"
+            >
+              Abrir no mapa
+            </a>
+          </div>
+
+          <div class="fade-up overflow-hidden rounded-2xl border border-black/[0.08] bg-black shadow-2xl" style="transition-delay:0.12s">
+            <img
+              src="./images/evento-default.jpg"
+              alt="Fachada da Igreja Evangélica Restitui"
+              class="h-[320px] w-full object-cover object-center sm:h-[420px] lg:h-[520px]"
+            />
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="relative h-[380px] w-full border-y border-black/[0.07] md:h-[480px]">
+          <iframe
+            title="Mapa da Igreja Evangélica Restitui"
+            src="https://www.google.com/maps?q=Avenida%20Vereador%20Jos%C3%A9%20Aleixo%2C%20852%20-%20Jardim%20S%C3%A3o%20Jos%C3%A9%2C%20Vargem%20Grande%20do%20Sul&output=embed"
+            class="h-full w-full"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+
+
+      </section>
+    </main>
+
+    <!-- ══════════════════════ FOOTER ══════════════════════ -->
+    <footer class="bg-blackLife border-t border-white/[0.06] px-5 py-8 text-center">
+      <p class="text-[0.6rem] font-bold uppercase tracking-[0.22em] text-white/30">
+        LIFE-CON: Identidade · Igreja Evangélica Restitui · 2026 · Todos os direitos reservados
+      </p>
+    </footer>
+
+    <a
+      href="https://wa.me/5519983800864"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="whatsapp-float"
+      aria-label="Falar no WhatsApp"
+    >
+      <svg width="29" height="29" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path fill="currentColor" d="M16.02 3.2c-7.02 0-12.73 5.66-12.73 12.62 0 2.39.68 4.63 1.85 6.53L3.2 28.8l6.67-1.86a12.8 12.8 0 0 0 6.15 1.57c7.02 0 12.73-5.66 12.73-12.63S23.04 3.2 16.02 3.2Zm0 23.17c-1.98 0-3.85-.54-5.45-1.48l-.39-.23-3.95 1.1 1.13-3.8-.25-.4a10.36 10.36 0 0 1-1.68-5.74c0-5.78 4.75-10.48 10.59-10.48 5.84 0 10.6 4.7 10.6 10.48s-4.76 10.55-10.6 10.55Zm5.8-7.88c-.32-.16-1.88-.92-2.18-1.02-.29-.11-.5-.16-.71.16-.2.32-.81 1.02-.99 1.23-.18.22-.36.24-.68.08-.32-.16-1.34-.49-2.55-1.57a9.5 9.5 0 0 1-1.76-2.18c-.18-.32-.02-.49.14-.64.14-.14.32-.36.48-.54.16-.19.21-.32.32-.53.1-.22.05-.4-.03-.56-.08-.16-.71-1.7-.98-2.33-.25-.61-.52-.53-.71-.54h-.61c-.21 0-.55.08-.84.4-.29.32-1.1 1.07-1.1 2.6 0 1.54 1.13 3.03 1.29 3.24.16.22 2.23 3.38 5.4 4.74.75.32 1.34.51 1.8.66.76.24 1.45.2 1.99.12.61-.09 1.88-.77 2.15-1.5.27-.75.27-1.38.19-1.51-.08-.14-.29-.22-.61-.38Z"/>
+      </svg>
+    </a>
+
+    <!-- ══════════════════════ SCRIPTS ══════════════════════ -->
+    <script>
+      // ── Initial skeleton loader ──
+      const pageLoader = document.getElementById('page-loader');
+      const word1 = document.getElementById('loader-word1');
+      const word2 = document.getElementById('loader-word2');
+      const loaderStart = Date.now();
+      const loaderMinDuration = 5000;
+      const text1 = 'LIFE-CON:';
+      const text2 = 'IDENTIDADE';
+      let idx1 = 0;
+      let idx2 = 0;
+
+      function typeLoader() {
+        if (idx1 <= text1.length) {
+          word1.classList.add('typing');
+          word1.textContent = text1.slice(0, idx1);
+          idx1++;
+          setTimeout(typeLoader, idx1 === text1.length + 1 ? 300 : 80);
+        } else {
+          word1.classList.remove('typing');
+          word2.classList.add('typing');
+          if (idx2 <= text2.length) {
+            word2.textContent = text2.slice(0, idx2);
+            idx2++;
+            setTimeout(typeLoader, 80);
+          } else {
+            // Keep the blinker on the second word once finished
+            word2.classList.add('typing');
+          }
+        }
+      }
+      typeLoader();
+
+      function hidePageLoader() {
+        if (!pageLoader) return;
+        const elapsed = Date.now() - loaderStart;
+        const remaining = Math.max(0, loaderMinDuration - elapsed);
+        setTimeout(() => {
+          pageLoader.classList.add('loaded');
+          setTimeout(() => pageLoader.remove(), 500);
+        }, remaining);
+      }
+      if (document.readyState === 'complete') {
+        hidePageLoader();
+      } else {
+        window.addEventListener('load', hidePageLoader);
+      }
+
+      // ── Countdown ──
+      const eventDate = new Date('2026-07-26T14:00:00-03:00').getTime();
+      const units = {
+        days: document.getElementById('days'),
+        hours: document.getElementById('hours'),
+        minutes: document.getElementById('minutes'),
+        seconds: document.getElementById('seconds'),
+      };
+      function updateCountdown() {
+        const distance = eventDate - Date.now();
+        if (distance <= 0) {
+          Object.values(units).forEach(el => el.textContent = '00');
+          return;
+        }
+        units.days.textContent = String(Math.floor(distance / 86400000)).padStart(2, '0');
+        units.hours.textContent = String(Math.floor((distance % 86400000) / 3600000)).padStart(2, '0');
+        units.minutes.textContent = String(Math.floor((distance % 3600000) / 60000)).padStart(2, '0');
+        units.seconds.textContent = String(Math.floor((distance % 60000) / 1000)).padStart(2, '0');
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+
+      // ── Hamburger menu ──
+      const hamburgerBtn = document.getElementById('hamburger-btn');
+      const mobileMenu   = document.getElementById('mobile-menu');
+      const menuClose    = document.getElementById('menu-close');
+      const menuLinks    = document.querySelectorAll('[data-menu-link]');
+
+      function openMenu() {
+        hamburgerBtn.classList.add('active');
+        hamburgerBtn.setAttribute('aria-expanded', 'true');
+        mobileMenu.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function closeMenu() {
+        hamburgerBtn.classList.remove('active');
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      hamburgerBtn.addEventListener('click', () => mobileMenu.classList.contains('open') ? closeMenu() : openMenu());
+      menuClose.addEventListener('click', closeMenu);
+      menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+      // ── Fade-up on scroll ──
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+      // ── Navbar shadow on scroll ──
+      const navbar = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+          navbar.classList.add('shadow-2xl');
+        } else {
+          navbar.classList.remove('shadow-2xl');
+        }
+      }, { passive: true });
+    </script>
+  </body>
+</html>
